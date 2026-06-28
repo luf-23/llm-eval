@@ -11,7 +11,7 @@
 - `internal/provider`：模型 Provider 抽象层，当前包含 `deepseek` 和 `qwen`。
 - `internal/evaluator`：评分器模块，包含通用评分器和 benchmark 专用评分器。
 - `internal/cache`：本地文件缓存，缓存键由 provider、prompt、case id 和 input 共同生成。
-- `internal/runner`：评估流程编排模块。
+- `internal/runner`：评估流程编排模块，使用 worker pool 并发执行测试用例。
 - `internal/report`：报告生成模块，支持 JSON、Markdown 和 HTML。
 - `benchmarks`：内置 GSM8K、MATH、MMLU 三类 benchmark 风格测试套件。
 
@@ -19,11 +19,12 @@
 
 1. CLI 根据 `--suite` 参数加载测试套件。
 2. Runner 根据 `--model` 参数选择 `deepseek` 或 `qwen` Provider。
-3. 对每个测试用例，Runner 先检查本地缓存。
-4. 如果缓存未命中，则调用 Provider 获取模型输出。
-5. Evaluator 将模型输出与期望答案进行比对并计算得分。
-6. Runner 聚合通过数量、失败数量和整体分数。
-7. Report 模块将结果写入 `reports/latest.json`、`reports/latest.md` 和 `reports/latest.html`。
+3. Runner 根据 `--concurrency` 启动多个 goroutine 并发处理测试用例，并将并发数限制在 `1-5` 之间。
+4. 对每个测试用例，Runner 先检查本地缓存。
+5. 如果缓存未命中，则调用 Provider 获取模型输出。
+6. Evaluator 将模型输出与期望答案进行比对并计算得分。
+7. Runner 按原始 case 顺序收集结果，并聚合通过数量、失败数量和整体分数。
+8. Report 模块将结果写入 `reports/latest.json`、`reports/latest.md` 和 `reports/latest.html`。
 
 ## 测试套件
 

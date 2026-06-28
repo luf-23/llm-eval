@@ -9,6 +9,7 @@
 - 内置 `deepseek` 和 `qwen` 两个真实模型 Provider。
 - Provider 使用 OpenAI-compatible Chat Completions 接口，便于扩展其他模型服务商。
 - 提供可扩展的评分器接口，支持通用评分器和 benchmark 专用评分器。
+- 支持通过 goroutine 并发评测数据集 case。
 - 支持本地结果缓存，避免重复调用模型。
 - 支持生成 JSON、Markdown 和 HTML 格式的评估报告。
 - HTML 报告包含总览、评分器统计、case 明细和 MMLU 选择题混淆矩阵。
@@ -18,7 +19,7 @@
 ```bash
 go mod tidy
 go test ./...
-go run ./cmd/llm-eval --suite benchmarks/gsm8k.yaml --model deepseek
+go run ./cmd/llm-eval --suite benchmarks/gsm8k.yaml --model deepseek --concurrency 4
 ```
 
 运行完成后会生成报告：
@@ -52,13 +53,13 @@ QWEN_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
 运行 DeepSeek：
 
 ```bash
-go run ./cmd/llm-eval --suite benchmarks/gsm8k.yaml --model deepseek
+go run ./cmd/llm-eval --suite benchmarks/gsm8k.yaml --model deepseek --concurrency 4
 ```
 
 运行 Qwen：
 
 ```bash
-go run ./cmd/llm-eval --suite benchmarks/mmlu.yaml --model qwen
+go run ./cmd/llm-eval --suite benchmarks/mmlu.yaml --model qwen --concurrency 4
 ```
 
 ## 内置示例套件
@@ -74,10 +75,12 @@ benchmarks/mmlu.yaml   MMLU 风格多选题
 可以分别运行：
 
 ```bash
-go run ./cmd/llm-eval --suite benchmarks/gsm8k.yaml --model deepseek
-go run ./cmd/llm-eval --suite benchmarks/math.yaml --model deepseek
-go run ./cmd/llm-eval --suite benchmarks/mmlu.yaml --model qwen
+go run ./cmd/llm-eval --suite benchmarks/gsm8k.yaml --model deepseek --concurrency 4
+go run ./cmd/llm-eval --suite benchmarks/math.yaml --model deepseek --concurrency 4
+go run ./cmd/llm-eval --suite benchmarks/mmlu.yaml --model qwen --concurrency 4
 ```
+
+`--concurrency` 用于控制同时评测的 case 数。为避免触发模型服务商限流，程序会将并发数限制在 `1-5` 之间。
 
 ## 测试套件格式
 

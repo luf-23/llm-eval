@@ -23,6 +23,7 @@ func main() {
 		outDir    = flag.String("out", "reports", "Directory for generated reports")
 		noCache   = flag.Bool("no-cache", false, "Disable local result cache")
 		timeout   = flag.Duration("timeout", 60*time.Second, "Timeout for the whole evaluation run")
+		workers   = flag.Int("concurrency", 4, "Number of benchmark cases to evaluate concurrently")
 	)
 	flag.Parse()
 
@@ -48,7 +49,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), *timeout)
 	defer cancel()
 
-	result, err := runner.New(modelProvider, cacheStore).Run(ctx, evalSuite)
+	result, err := runner.New(modelProvider, cacheStore).WithConcurrency(*workers).Run(ctx, evalSuite)
 	if err != nil {
 		log.Fatalf("run evaluation: %v", err)
 	}
