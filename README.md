@@ -10,6 +10,7 @@
 - Provider 使用 OpenAI-compatible Chat Completions 接口，便于扩展其他模型服务商。
 - 提供可扩展的评分器接口，支持通用评分器和 benchmark 专用评分器。
 - 支持通过 goroutine 并发评测数据集 case。
+- 支持模型 API 调用重试，自动处理网络错误、限流和服务端临时错误。
 - 支持本地结果缓存，避免重复调用模型。
 - 支持生成 JSON、Markdown 和 HTML 格式的评估报告。
 - HTML 报告包含总览、评分器统计、case 明细和 MMLU 选择题混淆矩阵。

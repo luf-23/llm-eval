@@ -9,6 +9,7 @@
 - `cmd/llm-eval`：CLI 入口，负责解析命令行参数并启动评估任务。
 - `internal/suite`：测试套件加载模块，支持 YAML 和 JSON。
 - `internal/provider`：模型 Provider 抽象层，当前包含 `deepseek` 和 `qwen`。
+- `internal/provider/retry.go`：模型 API 调用重试工具，支持指数退避。
 - `internal/evaluator`：评分器模块，包含通用评分器和 benchmark 专用评分器。
 - `internal/cache`：本地文件缓存，缓存键由 provider、prompt、case id 和 input 共同生成。
 - `internal/runner`：评估流程编排模块，使用 worker pool 并发执行测试用例。
@@ -85,6 +86,8 @@ HTML 报告包含四部分：
 ## 模型 Provider 配置
 
 DeepSeek 和 Qwen Provider 均使用 OpenAI-compatible Chat Completions 接口。
+
+Provider 调用模型 API 时会进行最多 3 次请求尝试。网络错误、HTTP 429 和 HTTP 5xx 会触发重试；HTTP 400、401、403 等请求或鉴权错误不会重试。重试等待时间采用指数退避，默认从 500ms 开始。
 
 DeepSeek 配置：
 

@@ -64,25 +64,11 @@ func (p ChatProvider) Generate(ctx context.Context, req Request) (Response, erro
 		return Response{}, err
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, p.baseURL+"/chat/completions", bytes.NewReader(body))
+	raw, err := withRetry(ctx, 3, 500*time.Millisecond, func() ([]byte, bool, error) {
+		return p.sendChatRequest(ctx, body)
+	})
 	if err != nil {
 		return Response{}, err
-	}
-	httpReq.Header.Set("Authorization", "Bearer "+p.apiKey)
-	httpReq.Header.Set("Content-Type", "application/json")
-
-	resp, err := p.client.Do(httpReq)
-	if err != nil {
-		return Response{}, err
-	}
-	defer resp.Body.Close()
-
-	raw, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return Response{}, err
-	}
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return Response{}, fmt.Errorf("%s status %d: %s", p.name, resp.StatusCode, string(raw))
 	}
 
 	output := extractChatOutput(raw)
@@ -90,6 +76,31 @@ func (p ChatProvider) Generate(ctx context.Context, req Request) (Response, erro
 		return Response{}, fmt.Errorf("%s response does not contain choices[0].message.content", p.name)
 	}
 	return Response{Output: output, Raw: string(raw)}, nil
+}
+
+func (p ChatProvider) sendChatRequest(ctx context.Context, body []byte) ([]byte, bool, error) {
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, p.baseURL+"/chat/completions", bytes.NewReader(body))
+	if err != nil {
+		return nil, false, err
+	}
+	httpReq.Header.Set("Authorization", "Bearer "+p.apiKey)
+	httpReq.Header.Set("Content-Type", "application/json")
+
+	resp, err := p.client.Do(httpReq)
+	if err != nil {
+		return nil, true, err
+	}
+	defer resp.Body.Close()
+
+	raw, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, true, err
+	}
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		retryable := resp.StatusCode == http.StatusTooManyRequests || resp.StatusCode >= 500
+		return nil, retryable, fmt.Errorf("%s status %d: %s", p.name, resp.StatusCode, string(raw))
+	}
+	return raw, false, nil
 }
 
 type chatRequest struct {
