@@ -1,0 +1,42 @@
+name: MMLU
+description: Sample MMLU-style multiple choice benchmark suite.
+prompt: |
+  You are answering an MMLU-style multiple choice question.
+  Return only one option letter: A, B, C, or D.
+cases:
+  - id: mmlu-history-001
+    input: |
+      Which event happened first?
+      A. The Apollo 11 Moon landing
+      B. The fall of the Berlin Wall
+      C. The American Declaration of Independence
+      D. The launch of the World Wide Web
+    expected: "C"
+    evaluator: exact_match
+  - id: mmlu-biology-001
+    input: |
+      Which organelle is primarily responsible for producing ATP in eukaryotic cells?
+      A. Ribosome
+      B. Mitochondrion
+      C. Golgi apparatus
+      D. Lysosome
+    expected: "B"
+    evaluator: exact_match
+  - id: mmlu-math-001
+    input: |
+      If f(x) = x^2, what is f(4)?
+      A. 4
+      B. 8
+      C. 12
+      D. 16
+    expected: "D"
+    evaluator: exact_match
+  - id: mmlu-law-001
+    input: |
+      In a contract, consideration most commonly refers to:
+      A. A court judgment
+      B. Something of value exchanged by the parties
+      C. A witness signature
+      D. A public filing
+    expected: "B"
+    evaluator: exact_match

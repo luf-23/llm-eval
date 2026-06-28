@@ -13,6 +13,7 @@
 - `internal/cache`：本地文件缓存，缓存键由 provider、prompt、case id 和 input 共同生成。
 - `internal/runner`：评估流程编排模块。
 - `internal/report`：报告生成模块，支持 JSON 和 Markdown。
+- `examples`：内置 GSM8K、MATH、MMLU 三类 benchmark 风格示例套件。
 
 ## 评估流程
 
@@ -23,6 +24,16 @@
 5. Evaluator 将模型输出与期望答案进行比对并计算得分。
 6. Runner 聚合通过数量、失败数量和整体分数。
 7. Report 模块将结果写入 `reports/latest.json` 和 `reports/latest.md`。
+
+## 测试套件
+
+当前项目提供三个示例测试套件：
+
+- `examples/gsm8k.yaml`：GSM8K 风格的小学数学文字题，要求模型输出最终数字。
+- `examples/math.yaml`：MATH 风格的数学推理题，覆盖代数、数论、几何和组合数学。
+- `examples/mmlu.yaml`：MMLU 风格的多选题，要求模型只输出 `A/B/C/D`。
+
+这些套件采用统一 YAML 格式，后续可以替换为完整公开数据集或接入数据集加载器。
 
 ## 扩展接口
 

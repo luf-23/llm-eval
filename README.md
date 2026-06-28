@@ -17,7 +17,7 @@
 ```bash
 go mod tidy
 go test ./...
-go run ./cmd/evaluate --suite examples/math.yaml --model deepseek
+go run ./cmd/evaluate --suite examples/gsm8k.yaml --model deepseek
 ```
 
 运行完成后会生成报告：
@@ -50,13 +50,31 @@ QWEN_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
 运行 DeepSeek：
 
 ```bash
-go run ./cmd/evaluate --suite examples/math.yaml --model deepseek
+go run ./cmd/evaluate --suite examples/gsm8k.yaml --model deepseek
 ```
 
 运行 Qwen：
 
 ```bash
-go run ./cmd/evaluate --suite examples/math.yaml --model qwen
+go run ./cmd/evaluate --suite examples/mmlu.yaml --model qwen
+```
+
+## 内置示例套件
+
+项目提供三个 benchmark 风格的示例套件：
+
+```text
+examples/gsm8k.yaml  GSM8K 风格小学数学文字题
+examples/math.yaml   MATH 风格数学推理题
+examples/mmlu.yaml   MMLU 风格多选题
+```
+
+可以分别运行：
+
+```bash
+go run ./cmd/evaluate --suite examples/gsm8k.yaml --model deepseek
+go run ./cmd/evaluate --suite examples/math.yaml --model deepseek
+go run ./cmd/evaluate --suite examples/mmlu.yaml --model qwen
 ```
 
 ## 测试套件格式
@@ -89,5 +107,5 @@ internal/cache      本地结果缓存
 internal/runner     评估流程编排
 internal/report     报告生成
 docs/design.md      项目设计文档
-examples/math.yaml  示例测试套件
+examples/           GSM8K、MATH、MMLU 示例测试套件
 ```

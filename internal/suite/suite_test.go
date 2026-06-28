@@ -29,3 +29,23 @@ cases:
 		t.Fatalf("expected default evaluator, got %q", s.Cases[0].Evaluator)
 	}
 }
+
+func TestLoadExampleSuites(t *testing.T) {
+	paths := []string{
+		"../../examples/gsm8k.yaml",
+		"../../examples/math.yaml",
+		"../../examples/mmlu.yaml",
+	}
+
+	for _, path := range paths {
+		t.Run(path, func(t *testing.T) {
+			s, err := Load(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(s.Cases) == 0 {
+				t.Fatalf("expected suite %s to contain cases", path)
+			}
+		})
+	}
+}

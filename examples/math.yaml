@@ -1,17 +1,22 @@
-name: math
-description: Simple arithmetic benchmark suite.
+name: MATH
+description: Sample MATH-style benchmark suite for algebra, number theory, and geometry reasoning.
 prompt: |
-  Answer with only the final answer. Do not include explanations.
+  You are solving a MATH benchmark style problem.
+  Return only the final answer without explanation.
 cases:
-  - id: add
-    input: "What is 2 + 3?"
+  - id: math-algebra-001
+    input: "Solve for x: 3x + 7 = 22."
     expected: "5"
     evaluator: exact_match
-  - id: multiply
-    input: "Calculate 6 * 7."
-    expected: "42"
+  - id: math-number-theory-001
+    input: "What is the remainder when 2^10 is divided by 7?"
+    expected: "2"
     evaluator: exact_match
-  - id: subtraction
-    input: "What is 10 - 4?"
-    expected: "6"
-    evaluator: contains
+  - id: math-geometry-001
+    input: "A rectangle has length 12 and width 5. What is its diagonal length?"
+    expected: "13"
+    evaluator: exact_match
+  - id: math-combinatorics-001
+    input: "How many ways are there to choose 2 objects from 5 distinct objects?"
+    expected: "10"
+    evaluator: exact_match
