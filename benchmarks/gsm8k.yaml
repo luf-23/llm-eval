@@ -20,3 +20,51 @@ cases:
     input: "A ticket costs 7 dollars. How much do 9 tickets cost?"
     expected: "63"
     evaluator: number_match
+  - id: gsm8k-005
+    input: "Mia bakes 24 cookies. She packs them equally into 6 boxes. How many cookies are in each box?"
+    expected: "4"
+    evaluator: number_match
+  - id: gsm8k-006
+    input: "A farmer has 18 chickens and 7 ducks. He buys 5 more chickens. How many birds does he have in total?"
+    expected: "30"
+    evaluator: number_match
+  - id: gsm8k-007
+    input: "Sara saves 3 dollars each day for 14 days. She spends 8 dollars on a notebook. How much money does she have left?"
+    expected: "34"
+    evaluator: number_match
+  - id: gsm8k-008
+    input: "There are 45 students going on a trip. Each bus can hold 15 students. How many buses are needed?"
+    expected: "3"
+    evaluator: number_match
+  - id: gsm8k-009
+    input: "A store sells pencils in packs of 4. Noah buys 7 packs and gives away 6 pencils. How many pencils does he have left?"
+    expected: "22"
+    evaluator: number_match
+  - id: gsm8k-010
+    input: "Emma has 50 marbles. She loses 13 and then finds 8 more. How many marbles does she have now?"
+    expected: "45"
+    evaluator: number_match
+  - id: gsm8k-011
+    input: "A class has 5 tables with 6 students at each table. Three students leave early. How many students remain?"
+    expected: "27"
+    evaluator: number_match
+  - id: gsm8k-012
+    input: "Ben runs 2 miles each morning for 9 days. How many miles does he run in total?"
+    expected: "18"
+    evaluator: number_match
+  - id: gsm8k-013
+    input: "A bakery sells 36 muffins in boxes of 9. How many boxes are filled?"
+    expected: "4"
+    evaluator: number_match
+  - id: gsm8k-014
+    input: "Olivia buys 3 notebooks for 5 dollars each and a pen for 2 dollars. How much does she spend?"
+    expected: "17"
+    evaluator: number_match
+  - id: gsm8k-015
+    input: "There are 64 crayons shared equally among 8 children. How many crayons does each child get?"
+    expected: "8"
+    evaluator: number_match
+  - id: gsm8k-016
+    input: "A train has 120 seats. If 87 seats are occupied, how many seats are empty?"
+    expected: "33"
+    evaluator: number_match

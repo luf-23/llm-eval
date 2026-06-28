@@ -20,3 +20,51 @@ cases:
     input: "How many ways are there to choose 2 objects from 5 distinct objects?"
     expected: "10"
     evaluator: math_match
+  - id: math-algebra-002
+    input: "If y = 2x^2 - 3x and x = 4, what is y?"
+    expected: "20"
+    evaluator: math_match
+  - id: math-number-theory-002
+    input: "What is the greatest common divisor of 84 and 126?"
+    expected: "42"
+    evaluator: math_match
+  - id: math-probability-001
+    input: "A fair six-sided die is rolled once. What is the probability of rolling an even number?"
+    expected: "1/2"
+    evaluator: math_match
+  - id: math-sequence-001
+    input: "The arithmetic sequence 4, 9, 14, ... has common difference 5. What is the 10th term?"
+    expected: "49"
+    evaluator: math_match
+  - id: math-algebra-003
+    input: "Factor x^2 - 9 over the integers."
+    expected: "(x-3)(x+3)"
+    evaluator: math_match
+  - id: math-algebra-004
+    input: "If 2a - 5 = 11, what is a?"
+    expected: "8"
+    evaluator: math_match
+  - id: math-number-theory-003
+    input: "What is the least common multiple of 12 and 18?"
+    expected: "36"
+    evaluator: math_match
+  - id: math-geometry-002
+    input: "What is the area of a triangle with base 10 and height 6?"
+    expected: "30"
+    evaluator: math_match
+  - id: math-probability-002
+    input: "A coin is flipped twice. What is the probability of getting two heads?"
+    expected: "1/4"
+    evaluator: math_match
+  - id: math-combinatorics-002
+    input: "How many permutations are there of 3 distinct objects?"
+    expected: "6"
+    evaluator: math_match
+  - id: math-sequence-002
+    input: "The geometric sequence 3, 6, 12, ... doubles each term. What is the 6th term?"
+    expected: "96"
+    evaluator: math_match
+  - id: math-arithmetic-001
+    input: "Compute 18^2 - 17^2."
+    expected: "35"
+    evaluator: math_match

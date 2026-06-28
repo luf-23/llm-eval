@@ -40,3 +40,111 @@ cases:
       D. A public filing
     expected: "B"
     evaluator: choice_match
+  - id: mmlu-computer-science-001
+    input: |
+      Which data structure uses first-in, first-out ordering?
+      A. Stack
+      B. Queue
+      C. Binary search tree
+      D. Hash map
+    expected: "B"
+    evaluator: choice_match
+  - id: mmlu-economics-001
+    input: |
+      If demand increases while supply stays the same, what generally happens to equilibrium price?
+      A. It decreases
+      B. It stays exactly the same
+      C. It increases
+      D. It becomes zero
+    expected: "C"
+    evaluator: choice_match
+  - id: mmlu-physics-001
+    input: |
+      Which quantity is equal to force multiplied by displacement in the direction of the force?
+      A. Power
+      B. Momentum
+      C. Work
+      D. Acceleration
+    expected: "C"
+    evaluator: choice_match
+  - id: mmlu-chemistry-001
+    input: |
+      What is the chemical symbol for sodium?
+      A. S
+      B. Na
+      C. So
+      D. N
+    expected: "B"
+    evaluator: choice_match
+  - id: mmlu-geography-001
+    input: |
+      Which is the largest ocean on Earth?
+      A. Atlantic Ocean
+      B. Indian Ocean
+      C. Pacific Ocean
+      D. Arctic Ocean
+    expected: "C"
+    evaluator: choice_match
+  - id: mmlu-literature-001
+    input: |
+      Who wrote the play Hamlet?
+      A. Charles Dickens
+      B. William Shakespeare
+      C. Jane Austen
+      D. Mark Twain
+    expected: "B"
+    evaluator: choice_match
+  - id: mmlu-medicine-001
+    input: |
+      Which vitamin is primarily associated with preventing scurvy?
+      A. Vitamin A
+      B. Vitamin B12
+      C. Vitamin C
+      D. Vitamin D
+    expected: "C"
+    evaluator: choice_match
+  - id: mmlu-statistics-001
+    input: |
+      What is the median of the numbers 2, 7, 9, 10, and 12?
+      A. 7
+      B. 9
+      C. 10
+      D. 12
+    expected: "B"
+    evaluator: choice_match
+  - id: mmlu-psychology-001
+    input: |
+      In classical conditioning, the neutral stimulus becomes a:
+      A. Conditioned stimulus
+      B. Random variable
+      C. Dependent variable
+      D. Control group
+    expected: "A"
+    evaluator: choice_match
+  - id: mmlu-philosophy-001
+    input: |
+      Which branch of philosophy studies the nature of knowledge?
+      A. Ethics
+      B. Epistemology
+      C. Aesthetics
+      D. Political philosophy
+    expected: "B"
+    evaluator: choice_match
+  - id: mmlu-business-001
+    input: |
+      Gross profit is generally calculated as:
+      A. Revenue minus cost of goods sold
+      B. Assets minus liabilities
+      C. Cash minus debt
+      D. Price divided by quantity
+    expected: "A"
+    evaluator: choice_match
+  - id: mmlu-sociology-001
+    input: |
+      A norm is best described as:
+      A. A formal scientific theory
+      B. A shared expectation about behavior
+      C. A biological reflex
+      D. A mathematical equation
+    expected: "B"
+    evaluator: choice_match
