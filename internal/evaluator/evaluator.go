@@ -9,9 +9,10 @@ import (
 )
 
 type Result struct {
-	Passed bool    `json:"passed"`
-	Score  float64 `json:"score"`
-	Reason string  `json:"reason"`
+	Passed     bool    `json:"passed"`
+	Score      float64 `json:"score"`
+	Reason     string  `json:"reason"`
+	Prediction string  `json:"prediction"`
 }
 
 type Evaluator interface {
@@ -43,8 +44,9 @@ type ExactMatch struct{}
 func (ExactMatch) Name() string { return "exact_match" }
 
 func (ExactMatch) Evaluate(output string, expected string) Result {
-	passed := normalize(output) == normalize(expected)
-	return boolResult(passed, "normalized output must equal expected answer")
+	prediction := normalize(output)
+	passed := prediction == normalize(expected)
+	return boolResult(passed, "normalized output must equal expected answer", prediction)
 }
 
 type Contains struct{}
@@ -53,7 +55,7 @@ func (Contains) Name() string { return "contains" }
 
 func (Contains) Evaluate(output string, expected string) Result {
 	passed := strings.Contains(strings.ToLower(output), strings.ToLower(expected))
-	return boolResult(passed, "output must contain expected answer")
+	return boolResult(passed, "output must contain expected answer", normalize(output))
 }
 
 type Regex struct{}
@@ -66,7 +68,7 @@ func (Regex) Evaluate(output string, expected string) Result {
 		return Result{Passed: false, Score: 0, Reason: "invalid expected regex: " + err.Error()}
 	}
 	passed := re.MatchString(output)
-	return boolResult(passed, "output must match expected regex")
+	return boolResult(passed, "output must match expected regex", normalize(output))
 }
 
 type ChoiceMatch struct{}
@@ -83,7 +85,7 @@ func (ChoiceMatch) Evaluate(output string, expected string) Result {
 		want = strings.ToUpper(strings.TrimSpace(expected))
 	}
 	passed := actual == want
-	return boolResult(passed, fmt.Sprintf("extracted choice %q must equal expected choice %q", actual, want))
+	return boolResult(passed, fmt.Sprintf("extracted choice %q must equal expected choice %q", actual, want), actual)
 }
 
 type NumberMatch struct{}
@@ -100,7 +102,7 @@ func (NumberMatch) Evaluate(output string, expected string) Result {
 		want = strings.TrimSpace(expected)
 	}
 	passed := numericEqual(actual, want)
-	return boolResult(passed, fmt.Sprintf("extracted number %q must equal expected number %q", actual, want))
+	return boolResult(passed, fmt.Sprintf("extracted number %q must equal expected number %q", actual, want), actual)
 }
 
 type MathMatch struct{}
@@ -125,18 +127,18 @@ func (MathMatch) Evaluate(output string, expected string) Result {
 	if !passed {
 		passed = normalizeMath(actual) == normalizeMath(want)
 	}
-	return boolResult(passed, fmt.Sprintf("extracted math answer %q must equal expected answer %q", actual, want))
+	return boolResult(passed, fmt.Sprintf("extracted math answer %q must equal expected answer %q", actual, want), actual)
 }
 
 func normalize(v string) string {
 	return strings.Join(strings.Fields(strings.TrimSpace(v)), " ")
 }
 
-func boolResult(passed bool, reason string) Result {
+func boolResult(passed bool, reason string, prediction string) Result {
 	if passed {
-		return Result{Passed: true, Score: 1, Reason: reason}
+		return Result{Passed: true, Score: 1, Reason: reason, Prediction: prediction}
 	}
-	return Result{Passed: false, Score: 0, Reason: reason}
+	return Result{Passed: false, Score: 0, Reason: reason, Prediction: prediction}
 }
 
 func extractChoice(v string) (string, bool) {

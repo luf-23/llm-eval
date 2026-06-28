@@ -30,7 +30,7 @@ cases:
 	}
 }
 
-func TestLoadExampleSuites(t *testing.T) {
+func TestLoadBenchmarkSuites(t *testing.T) {
 	paths := []string{
 		"../../benchmarks/gsm8k.yaml",
 		"../../benchmarks/math.yaml",

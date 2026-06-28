@@ -10,7 +10,8 @@
 - Provider 使用 OpenAI-compatible Chat Completions 接口，便于扩展其他模型服务商。
 - 提供可扩展的评分器接口，支持通用评分器和 benchmark 专用评分器。
 - 支持本地结果缓存，避免重复调用模型。
-- 支持生成 JSON 和 Markdown 格式的评估报告。
+- 支持生成 JSON、Markdown 和 HTML 格式的评估报告。
+- HTML 报告包含总览、评分器统计、case 明细和 MMLU 选择题混淆矩阵。
 
 ## 快速开始
 
@@ -25,6 +26,7 @@ go run ./cmd/llm-eval --suite benchmarks/gsm8k.yaml --model deepseek
 ```text
 reports/latest.json
 reports/latest.md
+reports/latest.html
 ```
 
 ## 配置模型 Provider
@@ -110,7 +112,7 @@ internal/cache      本地结果缓存
 internal/runner     评估流程编排
 internal/report     报告生成
 docs/design.md      项目设计文档
-benchmarks/             GSM8K、MATH、MMLU 测试套件
+benchmarks/         GSM8K、MATH、MMLU 测试套件
 ```
 
 

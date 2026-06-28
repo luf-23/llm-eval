@@ -62,10 +62,13 @@ func main() {
 	if err := report.WriteMarkdown(result, *outDir+"/latest.md"); err != nil {
 		log.Fatalf("write markdown report: %v", err)
 	}
+	if err := report.WriteHTML(result, *outDir+"/latest.html"); err != nil {
+		log.Fatalf("write html report: %v", err)
+	}
 
 	fmt.Printf("Suite: %s\n", result.SuiteName)
 	fmt.Printf("Cases: %d, Passed: %d, Failed: %d, Score: %.2f%%\n", result.Total, result.Passed, result.Failed, result.Score*100)
-	fmt.Printf("Reports: %s/latest.json, %s/latest.md\n", *outDir, *outDir)
+	fmt.Printf("Reports: %s/latest.json, %s/latest.md, %s/latest.html\n", *outDir, *outDir, *outDir)
 }
 
 func loadDotEnv(path string) error {

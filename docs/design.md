@@ -12,7 +12,7 @@
 - `internal/evaluator`：评分器模块，包含通用评分器和 benchmark 专用评分器。
 - `internal/cache`：本地文件缓存，缓存键由 provider、prompt、case id 和 input 共同生成。
 - `internal/runner`：评估流程编排模块。
-- `internal/report`：报告生成模块，支持 JSON 和 Markdown。
+- `internal/report`：报告生成模块，支持 JSON、Markdown 和 HTML。
 - `benchmarks`：内置 GSM8K、MATH、MMLU 三类 benchmark 风格测试套件。
 
 ## 评估流程
@@ -23,7 +23,7 @@
 4. 如果缓存未命中，则调用 Provider 获取模型输出。
 5. Evaluator 将模型输出与期望答案进行比对并计算得分。
 6. Runner 聚合通过数量、失败数量和整体分数。
-7. Report 模块将结果写入 `reports/latest.json` 和 `reports/latest.md`。
+7. Report 模块将结果写入 `reports/latest.json`、`reports/latest.md` 和 `reports/latest.html`。
 
 ## 测试套件
 
@@ -71,6 +71,15 @@ type Evaluator interface {
 - `choice_match`：从输出中抽取选择题选项，适用于 MMLU。
 - `number_match`：抽取最终数字并进行数值等价比较，适用于 GSM8K。
 - `math_match`：抽取 `\boxed{}` 或最终数值，并进行数学答案归一化，适用于 MATH。
+
+## 可视化报告
+
+HTML 报告包含四部分：
+
+- 总览：总题数、通过数、失败数和准确率。
+- 评分器统计：按 evaluator 聚合通过率。
+- 混淆矩阵：当套件使用 `choice_match` 时，展示 MMLU 风格选择题的 expected/predicted 分布。
+- 明细表：展示每道题的期望答案、抽取后的预测答案、原始模型输出和判分结果。
 
 ## 模型 Provider 配置
 
