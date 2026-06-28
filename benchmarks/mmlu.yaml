@@ -12,7 +12,7 @@ cases:
       C. The American Declaration of Independence
       D. The launch of the World Wide Web
     expected: "C"
-    evaluator: exact_match
+    evaluator: choice_match
   - id: mmlu-biology-001
     input: |
       Which organelle is primarily responsible for producing ATP in eukaryotic cells?
@@ -21,7 +21,7 @@ cases:
       C. Golgi apparatus
       D. Lysosome
     expected: "B"
-    evaluator: exact_match
+    evaluator: choice_match
   - id: mmlu-math-001
     input: |
       If f(x) = x^2, what is f(4)?
@@ -30,7 +30,7 @@ cases:
       C. 12
       D. 16
     expected: "D"
-    evaluator: exact_match
+    evaluator: choice_match
   - id: mmlu-law-001
     input: |
       In a contract, consideration most commonly refers to:
@@ -39,4 +39,4 @@ cases:
       C. A witness signature
       D. A public filing
     expected: "B"
-    evaluator: exact_match
+    evaluator: choice_match

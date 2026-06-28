@@ -32,9 +32,9 @@ cases:
 
 func TestLoadExampleSuites(t *testing.T) {
 	paths := []string{
-		"../../examples/gsm8k.yaml",
-		"../../examples/math.yaml",
-		"../../examples/mmlu.yaml",
+		"../../benchmarks/gsm8k.yaml",
+		"../../benchmarks/math.yaml",
+		"../../benchmarks/mmlu.yaml",
 	}
 
 	for _, path := range paths {

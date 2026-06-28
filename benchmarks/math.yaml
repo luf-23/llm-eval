@@ -7,16 +7,16 @@ cases:
   - id: math-algebra-001
     input: "Solve for x: 3x + 7 = 22."
     expected: "5"
-    evaluator: exact_match
+    evaluator: math_match
   - id: math-number-theory-001
     input: "What is the remainder when 2^10 is divided by 7?"
     expected: "2"
-    evaluator: exact_match
+    evaluator: math_match
   - id: math-geometry-001
     input: "A rectangle has length 12 and width 5. What is its diagonal length?"
     expected: "13"
-    evaluator: exact_match
+    evaluator: math_match
   - id: math-combinatorics-001
     input: "How many ways are there to choose 2 objects from 5 distinct objects?"
     expected: "10"
-    evaluator: exact_match
+    evaluator: math_match

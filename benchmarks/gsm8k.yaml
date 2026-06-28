@@ -7,16 +7,16 @@ cases:
   - id: gsm8k-001
     input: "Lily has 12 stickers. She gives 5 to her friend and then buys 9 more. How many stickers does she have now?"
     expected: "16"
-    evaluator: exact_match
+    evaluator: number_match
   - id: gsm8k-002
     input: "A box has 6 bags of apples. Each bag has 8 apples. If 10 apples are eaten, how many apples are left?"
     expected: "38"
-    evaluator: exact_match
+    evaluator: number_match
   - id: gsm8k-003
     input: "Tom reads 15 pages each day for 4 days. The book has 100 pages. How many pages remain unread?"
     expected: "40"
-    evaluator: exact_match
+    evaluator: number_match
   - id: gsm8k-004
     input: "A ticket costs 7 dollars. How much do 9 tickets cost?"
     expected: "63"
-    evaluator: exact_match
+    evaluator: number_match

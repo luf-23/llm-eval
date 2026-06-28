@@ -18,7 +18,7 @@ import (
 
 func main() {
 	var (
-		suitePath = flag.String("suite", "examples/math.yaml", "Path to evaluation suite YAML or JSON file")
+		suitePath = flag.String("suite", "benchmarks/gsm8k.yaml", "Path to evaluation suite YAML or JSON file")
 		model     = flag.String("model", "deepseek", "Model provider to use: deepseek or qwen")
 		outDir    = flag.String("out", "reports", "Directory for generated reports")
 		noCache   = flag.Bool("no-cache", false, "Disable local result cache")

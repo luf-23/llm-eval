@@ -1,4 +1,4 @@
-# 项目设计文档
+﻿# 项目设计文档
 
 ## 项目目标
 
@@ -6,14 +6,14 @@
 
 ## 模块划分
 
-- `cmd/evaluate`：CLI 入口，负责解析命令行参数并启动评估任务。
+- `cmd/llm-eval`：CLI 入口，负责解析命令行参数并启动评估任务。
 - `internal/suite`：测试套件加载模块，支持 YAML 和 JSON。
 - `internal/provider`：模型 Provider 抽象层，当前包含 `deepseek` 和 `qwen`。
-- `internal/evaluator`：评分器模块，当前包含 `exact_match`、`contains` 和 `regex`。
+- `internal/evaluator`：评分器模块，包含通用评分器和 benchmark 专用评分器。
 - `internal/cache`：本地文件缓存，缓存键由 provider、prompt、case id 和 input 共同生成。
 - `internal/runner`：评估流程编排模块。
 - `internal/report`：报告生成模块，支持 JSON 和 Markdown。
-- `examples`：内置 GSM8K、MATH、MMLU 三类 benchmark 风格示例套件。
+- `benchmarks`：内置 GSM8K、MATH、MMLU 三类 benchmark 风格测试套件。
 
 ## 评估流程
 
@@ -29,9 +29,9 @@
 
 当前项目提供三个示例测试套件：
 
-- `examples/gsm8k.yaml`：GSM8K 风格的小学数学文字题，要求模型输出最终数字。
-- `examples/math.yaml`：MATH 风格的数学推理题，覆盖代数、数论、几何和组合数学。
-- `examples/mmlu.yaml`：MMLU 风格的多选题，要求模型只输出 `A/B/C/D`。
+- `benchmarks/gsm8k.yaml`：GSM8K 风格的小学数学文字题，使用 `number_match` 抽取最终数字。
+- `benchmarks/math.yaml`：MATH 风格的数学推理题，使用 `math_match` 处理 `\boxed{}` 和数学答案归一化。
+- `benchmarks/mmlu.yaml`：MMLU 风格的多选题，使用 `choice_match` 抽取最终 `A/B/C/D` 选项。
 
 这些套件采用统一 YAML 格式，后续可以替换为完整公开数据集或接入数据集加载器。
 
@@ -63,6 +63,15 @@ type Evaluator interface {
 
 后续可以继续扩展 BLEU、ROUGE、JSON Schema 校验、自定义规则评分等指标。
 
+当前内置评分器：
+
+- `exact_match`：归一化空白后进行精确匹配。
+- `contains`：检查模型输出是否包含期望答案。
+- `regex`：使用正则表达式验证模型输出。
+- `choice_match`：从输出中抽取选择题选项，适用于 MMLU。
+- `number_match`：抽取最终数字并进行数值等价比较，适用于 GSM8K。
+- `math_match`：抽取 `\boxed{}` 或最终数值，并进行数学答案归一化，适用于 MATH。
+
 ## 模型 Provider 配置
 
 DeepSeek 和 Qwen Provider 均使用 OpenAI-compatible Chat Completions 接口。
@@ -84,3 +93,5 @@ Qwen 配置：
 ## 缓存策略
 
 缓存键使用 provider 名称、suite prompt、case id 和 input 共同计算 SHA-256 摘要。缓存内容保留模型原始输出，重复运行同一评估任务时可以避免重复请求模型 API，降低成本并提升复现性。
+
+
