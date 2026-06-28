@@ -1,0 +1,17 @@
+name: math
+description: Simple arithmetic benchmark suite.
+prompt: |
+  Answer with only the final answer. Do not include explanations.
+cases:
+  - id: add
+    input: "What is 2 + 3?"
+    expected: "5"
+    evaluator: exact_match
+  - id: multiply
+    input: "Calculate 6 * 7."
+    expected: "42"
+    evaluator: exact_match
+  - id: subtraction
+    input: "What is 10 - 4?"
+    expected: "6"
+    evaluator: contains
